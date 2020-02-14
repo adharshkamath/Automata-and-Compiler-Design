@@ -1,4 +1,4 @@
-# Automata-and-Compiler-Design <br>
+# Automata and Compiler Design <br>
 Code for the IT250 Assignments <br>
  - [ ] Lexer to identify tokens in a C program <br>
  - [ ] Parser to identify a specified grammar <br>
