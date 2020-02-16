@@ -23,7 +23,7 @@ OPERATOR (=|\+|\-|\/|\*|%)
 COMPARISON >=|>|<|<=
 BITWISE_OPERATOR &|~|\||\^
 SINGLELINE_COMMENT \/\/.*
-
+MALFORMED_STRING (\"[^"\n]*|\'[^'\n]*)
 PARENTHESIS \(|\)|\[|\]|\{|\}
 SEMICOLON ;
 COMMA ,
