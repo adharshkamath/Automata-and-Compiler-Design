@@ -23,6 +23,7 @@ OPERATOR (=|\+|\-|\/|\*|%)
 COMPARISON >=|>|<|<=
 BITWISE_OPERATOR &|~|\||\^
 SINGLELINE_COMMENT \/\/.*
+MULTILINE_COMMENT "/*"([^*]|\*+[^/])*\*+"/"
 MALFORMED_STRING (\"[^"\n]*|\'[^'\n]*)
 PARENTHESIS \(|\)|\[|\]|\{|\}
 SEMICOLON ;
@@ -34,6 +35,7 @@ DOT_DELIMITER \.
 
 \n line++;
 [\t ] ;
+{MULTILINE_COMMENT} {printf("%20s \t---- \tMULTILINE COMMENT\n", yytext);}
 {DOT_DELIMITER} {printf("%20s \t---- \tDOT DELIMITER\n", yytext);}
 {SEMICOLON} {printf("%20s \t---- \tSEMICOLON\n", yytext);}
 {COMMA} {printf("%20s \t---- \tCOMMA\n", yytext);}

@@ -6,3 +6,9 @@ int main() {
 }
 
 // single line comment
+
+/*rlfsdbn; f
+gfbd/*    
+gfdb      regfdbrwf     ****** */
+rghtrtehrewregfhfnb
+*/
