@@ -47,6 +47,7 @@ DOT_DELIMITER \.
 {SEMICOLON} {printf("%20s \t---- \tSEMICOLON\n", yytext);}
 {COMMA} {printf("%20s \t---- \tCOMMA\n", yytext);}
 {PREPROCESSOR} {printf("%20s \t---- \tPREPROCESSOR\n", yytext);}
+{MALFORMED_STRING} {printf("%20s \t---- \tMALFORMED STRING\n", yytext);}
 {STRING} {printf("%20s \t---- \tSTRING\n", yytext);}
 {KEYWORD} {printf("%20s \t---- \tKEYWORD\n", yytext);}
 {CONTROL_STATEMENT} {printf("%20s \t---- \tCONTROL STATEMENT\n", yytext);}

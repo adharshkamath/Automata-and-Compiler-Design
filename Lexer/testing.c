@@ -1,6 +1,6 @@
 #include<stdio.h>
 int main() {
-    yyin = fopen("testing.c", "r");
+    yyin = fopen("testing.c", "r');
     yylex();
     a.out;
 }
