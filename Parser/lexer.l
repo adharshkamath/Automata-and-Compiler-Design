@@ -26,28 +26,26 @@ Sriram Rao - 181IT246
 %}
 
 
-/* 
-IDENTIFIER is a C style identifier
-Let TERM be IDENTIFIER or NUMBER
-
-EXPRESSION matches the following types of patterns:
-	TERM
-	TERM OPERATOR TERM (With the whitespace being optional)
-*/
 WHITESPACE		[ \t\n\v\f]
 IDENTIFIER 		[a-zA-Z_]([a-zA-Z0-9_])*
 NUMBER			[0-9]+
-OPERATOR		[-+*/<=>]|"++"|"--"
-EXPRESSION		({IDENTIFIER}|{NUMBER})|({IDENTIFIER}({WHITESPACE}*)?({OPERATOR}({WHITESPACE}*)?({IDENTIFIER}|{NUMBER}))?)
-SINGLE_CHAR		[(){};]
+OPERATOR		[-+*/]|"=="|">="|"<="|">"|"<"
+U_OPERATOR		"++"|"--"	
+/* EXPRESSION		({IDENTIFIER}|{NUMBER})|({IDENTIFIER}({WHITESPACE}*)?({OPERATOR}({WHITESPACE}*)?({IDENTIFIER}|{NUMBER}))?) */
+SINGLE_CHAR		[=(){};]
+/* EXPRESSION		({IDENTIFIER}|{NUMBER}) */
+/* {EXPRESSION}    {yylval.f=yytext; return EXPR;} */
 
 %%
 
 {SINGLE_CHAR}   {return yytext[0];}
+{OPERATOR}		{return OP;}
+{U_OPERATOR}	{return U_OP;}
 "if"            {return IF;}
 "for"           {return FOR;}
 "else"          {return ELSE;}
-{EXPRESSION}    {yylval.f=yytext; return EXPR;}
+{NUMBER}		{return NUM;}
+{IDENTIFIER}	{return ID;}
 {WHITESPACE}    {;}
 
 %%

@@ -95,8 +95,8 @@ void yyerror(char *msg);
    char* f; 
 } 
   
-%token <f> EXPR
-%token IF FOR
+/* %token <f> EXPR */
+%token IF FOR ID U_OP OP NUM
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
 
@@ -111,6 +111,15 @@ void yyerror(char *msg);
          |   IF '('EXPR')' STMT ELSE STMT
          |   FOR '('EXPR';'EXPR';'EXPR')' STMT
          |   '{'STMTS'}'
+         ;
+   
+   EXPR  :  TERM
+         |  ID U_OP
+         |  EXPR OP EXPR
+         ;
+   
+   TERM  :  ID
+         |  NUM
          ;
 %% 
   
