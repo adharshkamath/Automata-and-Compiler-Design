@@ -25,13 +25,31 @@ Sriram Rao - 181IT246
 #include "y.tab.h" 
 %}
 
+
+/* 
+IDENTIFIER is a C style identifier
+Let TERM be IDENTIFIER or NUMBER
+
+EXPRESSION matches the following types of patterns:
+	TERM
+	TERM OPERATOR TERM (With the whitespace being optional)
+*/
+WHITESPACE		[ \t\n\v\f]
+IDENTIFIER 		[a-zA-Z_]([a-zA-Z0-9_])*
+NUMBER			[0-9]+
+OPERATOR		[-+*/<=>]|"++"|"--"
+EXPRESSION		({IDENTIFIER}|{NUMBER})|({IDENTIFIER}({WHITESPACE}*)?({OPERATOR}({WHITESPACE}*)?({IDENTIFIER}|{NUMBER}))?)
+SINGLE_CHAR		[(){};]
+
 %%
-[ \t\n\v\f]     {;}
-[(){};]         {return yytext[0];}
+
+{SINGLE_CHAR}   {return yytext[0];}
 "if"            {return IF;}
 "for"           {return FOR;}
 "else"          {return ELSE;}
-[a-zA-Z0-9]+    {yylval.f=yytext; return EXPR;}
+{EXPRESSION}    {yylval.f=yytext; return EXPR;}
+{WHITESPACE}    {;}
+
 %%
   
 int yywrap() 
