@@ -20,15 +20,16 @@ Sriram Rao - 181IT246
 */
 
 %{ 
+
 /* Definition section */
 
-#include <stdio.h> 
-#include <string.h>    
-#include <stdlib.h> 
-
-extern int yylex(); 
-
-void yyerror(char *msg);        
+    #include <stdio.h> 
+    #include <string.h>    
+    #include <stdlib.h> 
+    extern int yylex(void);
+    void yyerror(const char *msg);
+    int success = 1; 
+      
 %} 
   
 %union { 
@@ -65,18 +66,17 @@ void yyerror(char *msg);
          ;
 %% 
   
-void yyerror(char *msg) 
-{ 
-   fprintf(stderr, "%s\n", msg); 
-   exit(1); 
-} 
-  
-//driver code
+int main() {
+    
+    yyparse();
+    if(success) {
+        printf("OK\n");
+    }
+    return 0;
+}
 
-int main() 
-{ 
-   yyparse();
-   printf("OK"); 
-   return 0; 
-} 
-
+void yyerror(const char *msg) {
+    extern int yylineno;
+    printf("\nProblem occured at line number %d\nError: %s\n", yylineno, msg);
+    success = 0;
+}
