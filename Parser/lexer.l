@@ -26,7 +26,7 @@ Sriram Rao - 181IT246
 %}
 
 
-WHITESPACE		[ \t\n\v\f]
+WHITESPACE		[ \t\v\f]
 IDENTIFIER 		[a-zA-Z_]([a-zA-Z0-9_])*
 NUMBER			([0-9]+|[0-9]+\.[0-9]+)
 OPERATOR		[-+*/]|"=="|">="|"<="|">"|"<"
@@ -35,6 +35,7 @@ SINGLE_CHAR		[=(){};]
 
 %%
 
+\n 				{ yylineno++; }
 {SINGLE_CHAR}   {return yytext[0];}
 {OPERATOR}		{return OP;}
 {U_OPERATOR}	{return UNARY_OP;}

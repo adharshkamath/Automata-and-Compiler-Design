@@ -27,7 +27,7 @@ Sriram Rao - 181IT246
     #include <string.h>    
     #include <stdlib.h> 
     extern int yylex(void);
-    void yyerror(const char *msg);
+    int yyerror(const char *msg);
     int success = 1; 
       
 %} 
@@ -67,7 +67,8 @@ Sriram Rao - 181IT246
 %% 
   
 int main() {
-    
+    extern int yylineno;
+    yylineno = 0;
     yyparse();
     if(success) {
         printf("OK\n");
@@ -75,8 +76,9 @@ int main() {
     return 0;
 }
 
-void yyerror(const char *msg) {
+int yyerror(const char *msg) {
     extern int yylineno;
     printf("\nProblem occured at line number %d\nError: %s\n", yylineno, msg);
     success = 0;
+    return 1;
 }
