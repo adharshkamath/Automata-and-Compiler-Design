@@ -57,7 +57,7 @@ void yyerror(char *msg);
    EXPR  :  TERM
          |  ID UNARY_OP
          |  EXPR OP EXPR
-         |  EXPR '=' EXPR
+         |  ID '=' EXPR
          ;
    
    TERM  :  ID

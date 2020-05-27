@@ -3,7 +3,7 @@
 #### Code for the IT250 Assignments
 
 1.  [x] Lexer to identify tokens in a C program
-2.  [ ] Parser to identify a specified grammar
+2.  [x] Parser to identify a specified grammar
 
 #### Team Members:
 
