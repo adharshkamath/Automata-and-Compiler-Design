@@ -23,6 +23,8 @@ Sriram Rao - 181IT246
 	#include <stdio.h> 
 	#include <stdlib.h> 
 	#include "y.tab.h" 
+	extern int yycolumn;
+	extern int yyleng;
 %}
 
 
@@ -35,17 +37,17 @@ SINGLE_CHAR		[=(){};]
 
 %%
 
-\n 				{ yylineno++; }
-{SINGLE_CHAR}   {return yytext[0];}
-{OPERATOR}		{return OP;}
-{U_OPERATOR}	{return UNARY_OP;}
-"if"            {return IF;}
-"for"           {return FOR;}
-"else"          {return ELSE;}
-{NUMBER}		{return NUM;}
-{IDENTIFIER}	{return ID;}
-{WHITESPACE}    {;}
-.				{return yytext[0];}
+\n 				{ yycolumn = 0; yylineno++; }
+{SINGLE_CHAR}   { yycolumn++; return yytext[0]; }
+{OPERATOR}		{ yycolumn += yyleng; return OP; }
+{U_OPERATOR}	{ yycolumn += yyleng; return UNARY_OP; }
+"if"            { yycolumn += 2; return IF; }
+"for"           { yycolumn += 3; return FOR; }
+"else"          { yycolumn += 4; return ELSE; }
+{NUMBER}		{ yycolumn += yyleng; return NUM; }
+{IDENTIFIER}	{ yycolumn += yyleng; return ID; }
+{WHITESPACE}    { yycolumn += yyleng; }
+.				{ yycolumn += 1; return yytext[0];}
 
 %%
   

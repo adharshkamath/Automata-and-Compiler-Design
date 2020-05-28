@@ -30,6 +30,7 @@ Sriram Rao - 181IT246
     int yyerror(const char *msg);
     int success = 1; 
     int errors = 0;
+    int yycolumn = 0;
       
 %} 
   
@@ -83,9 +84,9 @@ int main() {
 
 int yyerror(const char *msg) {
     extern char* yytext;
-    extern int yyleng;
     extern int yylineno;
-    printf("\nProblem occured at line number %d near \" %s \"\nError: %s\n", yylineno, yytext, msg);
+    extern int yycolumn;
+    printf("\nProblem occured at line number %d, column number %d, near '%s'\nError: %s\n", yylineno, yycolumn, yytext, msg);
     errors++;
     success = 0;
     return 1;
