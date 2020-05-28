@@ -57,7 +57,8 @@ Sriram Rao - 181IT246
    
    EXPR  :  TERM
          |  ID UNARY_OP
-         |  EXPR OP EXPR
+         |  UNARY_OP ID
+         |  TERM OP EXPR
          |  ID '=' EXPR
          ;
    

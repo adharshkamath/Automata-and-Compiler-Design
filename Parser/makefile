@@ -5,4 +5,4 @@ lexer: lexer.l
 	lex lexer.l
 
 parser: parser.y
-	yacc -d parser.y
+	yacc -d parser.y -Wno-yacc
