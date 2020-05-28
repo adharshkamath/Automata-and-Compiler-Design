@@ -5,7 +5,7 @@
 - Run the following in a shell:
   - `lex lexer.l`
   - `yacc -d parser.y`
-  - `gcc lex.yy.c y.tab.c -o prog`
+  - `gcc lex.yy.c y.tab.c -o program`
 - This will create an executable "program" that can then be run
 
 ## Using the makefile
