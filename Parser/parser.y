@@ -29,6 +29,7 @@ Sriram Rao - 181IT246
     extern int yylex(void);
     int yyerror(const char *msg);
     int success = 1; 
+    int errors = 0;
       
 %} 
   
@@ -60,6 +61,7 @@ Sriram Rao - 181IT246
          |  UNARY_OP ID
          |  TERM OP EXPR
          |  ID '=' EXPR
+         |  error
          ;
    
    TERM  :  ID
@@ -69,17 +71,22 @@ Sriram Rao - 181IT246
   
 int main() {
     extern int yylineno;
-    yylineno = 0;
     yyparse();
     if(success) {
         printf("OK\n");
+    }
+    else {
+        printf("\nParsing failed due to %d error(s)\n", errors);
     }
     return 0;
 }
 
 int yyerror(const char *msg) {
+    extern char* yytext;
+    extern int yyleng;
     extern int yylineno;
-    printf("\nProblem occured at line number %d\nError: %s\n", yylineno, msg);
+    printf("\nProblem occured at line number %d near \" %s \"\nError: %s\n", yylineno, yytext, msg);
+    errors++;
     success = 0;
     return 1;
 }

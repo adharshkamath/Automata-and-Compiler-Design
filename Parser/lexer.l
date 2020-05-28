@@ -20,9 +20,9 @@ Sriram Rao - 181IT246
 */
 
 %{
-#include <stdio.h> 
-#include <stdlib.h> 
-#include "y.tab.h" 
+	#include <stdio.h> 
+	#include <stdlib.h> 
+	#include "y.tab.h" 
 %}
 
 
@@ -45,10 +45,10 @@ SINGLE_CHAR		[=(){};]
 {NUMBER}		{return NUM;}
 {IDENTIFIER}	{return ID;}
 {WHITESPACE}    {;}
+.				{return yytext[0];}
 
 %%
   
-int yywrap() 
-{  
-return -1;  
+int yywrap() {  
+	return -1;  
 }
