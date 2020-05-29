@@ -1,0 +1,430 @@
+Grammar
+
+    0 $accept: STMTS $end
+
+    1 STMTS: STMTS STMT
+    2      | %empty
+
+    3 STMT: ';'
+    4     | EXPR ';'
+    5     | IF '(' EXPR ')' STMT
+    6     | IF '(' EXPR ')' STMT ELSE STMT
+    7     | FOR '(' EXPR ';' EXPR ';' EXPR ')' STMT
+    8     | '{' STMTS '}'
+
+    9 EXPR: TERM
+   10     | ID UNARY_OP
+   11     | UNARY_OP ID
+   12     | TERM OP EXPR
+   13     | ID '=' EXPR
+   14     | error
+
+   15 TERM: ID
+   16     | NUM
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 5 6 7
+')' (41) 5 6 7
+';' (59) 3 4 7
+'=' (61) 13
+'{' (123) 8
+'}' (125) 8
+error (256) 14
+IF (258) 5 6
+FOR (259) 7
+ID (260) 10 11 13 15
+UNARY_OP (261) 10 11
+OP (262) 12
+NUM (263) 16
+LOWER_THAN_ELSE (264)
+ELSE (265) 6
+
+
+Nonterminals, with rules where they appear
+
+$accept (17)
+    on left: 0
+STMTS (18)
+    on left: 1 2, on right: 0 1 8
+STMT (19)
+    on left: 3 4 5 6 7 8, on right: 1 5 6 7
+EXPR (20)
+    on left: 9 10 11 12 13 14, on right: 4 5 6 7 12 13
+TERM (21)
+    on left: 15 16, on right: 9 12
+
+
+State 0
+
+    0 $accept: . STMTS $end
+
+    $default  reduce using rule 2 (STMTS)
+
+    STMTS  go to state 1
+
+
+State 1
+
+    0 $accept: STMTS . $end
+    1 STMTS: STMTS . STMT
+
+    $end      shift, and go to state 2
+    error     shift, and go to state 3
+    IF        shift, and go to state 4
+    FOR       shift, and go to state 5
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+    ';'       shift, and go to state 9
+    '{'       shift, and go to state 10
+
+    STMT  go to state 11
+    EXPR  go to state 12
+    TERM  go to state 13
+
+
+State 2
+
+    0 $accept: STMTS $end .
+
+    $default  accept
+
+
+State 3
+
+   14 EXPR: error .
+
+    $default  reduce using rule 14 (EXPR)
+
+
+State 4
+
+    5 STMT: IF . '(' EXPR ')' STMT
+    6     | IF . '(' EXPR ')' STMT ELSE STMT
+
+    '('  shift, and go to state 14
+
+
+State 5
+
+    7 STMT: FOR . '(' EXPR ';' EXPR ';' EXPR ')' STMT
+
+    '('  shift, and go to state 15
+
+
+State 6
+
+   10 EXPR: ID . UNARY_OP
+   13     | ID . '=' EXPR
+   15 TERM: ID .
+
+    UNARY_OP  shift, and go to state 16
+    '='       shift, and go to state 17
+
+    $default  reduce using rule 15 (TERM)
+
+
+State 7
+
+   11 EXPR: UNARY_OP . ID
+
+    ID  shift, and go to state 18
+
+
+State 8
+
+   16 TERM: NUM .
+
+    $default  reduce using rule 16 (TERM)
+
+
+State 9
+
+    3 STMT: ';' .
+
+    $default  reduce using rule 3 (STMT)
+
+
+State 10
+
+    8 STMT: '{' . STMTS '}'
+
+    $default  reduce using rule 2 (STMTS)
+
+    STMTS  go to state 19
+
+
+State 11
+
+    1 STMTS: STMTS STMT .
+
+    $default  reduce using rule 1 (STMTS)
+
+
+State 12
+
+    4 STMT: EXPR . ';'
+
+    ';'  shift, and go to state 20
+
+
+State 13
+
+    9 EXPR: TERM .
+   12     | TERM . OP EXPR
+
+    OP  shift, and go to state 21
+
+    $default  reduce using rule 9 (EXPR)
+
+
+State 14
+
+    5 STMT: IF '(' . EXPR ')' STMT
+    6     | IF '(' . EXPR ')' STMT ELSE STMT
+
+    error     shift, and go to state 3
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+
+    EXPR  go to state 22
+    TERM  go to state 13
+
+
+State 15
+
+    7 STMT: FOR '(' . EXPR ';' EXPR ';' EXPR ')' STMT
+
+    error     shift, and go to state 3
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+
+    EXPR  go to state 23
+    TERM  go to state 13
+
+
+State 16
+
+   10 EXPR: ID UNARY_OP .
+
+    $default  reduce using rule 10 (EXPR)
+
+
+State 17
+
+   13 EXPR: ID '=' . EXPR
+
+    error     shift, and go to state 3
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+
+    EXPR  go to state 24
+    TERM  go to state 13
+
+
+State 18
+
+   11 EXPR: UNARY_OP ID .
+
+    $default  reduce using rule 11 (EXPR)
+
+
+State 19
+
+    1 STMTS: STMTS . STMT
+    8 STMT: '{' STMTS . '}'
+
+    error     shift, and go to state 3
+    IF        shift, and go to state 4
+    FOR       shift, and go to state 5
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+    ';'       shift, and go to state 9
+    '{'       shift, and go to state 10
+    '}'       shift, and go to state 25
+
+    STMT  go to state 11
+    EXPR  go to state 12
+    TERM  go to state 13
+
+
+State 20
+
+    4 STMT: EXPR ';' .
+
+    $default  reduce using rule 4 (STMT)
+
+
+State 21
+
+   12 EXPR: TERM OP . EXPR
+
+    error     shift, and go to state 3
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+
+    EXPR  go to state 26
+    TERM  go to state 13
+
+
+State 22
+
+    5 STMT: IF '(' EXPR . ')' STMT
+    6     | IF '(' EXPR . ')' STMT ELSE STMT
+
+    ')'  shift, and go to state 27
+
+
+State 23
+
+    7 STMT: FOR '(' EXPR . ';' EXPR ';' EXPR ')' STMT
+
+    ';'  shift, and go to state 28
+
+
+State 24
+
+   13 EXPR: ID '=' EXPR .
+
+    $default  reduce using rule 13 (EXPR)
+
+
+State 25
+
+    8 STMT: '{' STMTS '}' .
+
+    $default  reduce using rule 8 (STMT)
+
+
+State 26
+
+   12 EXPR: TERM OP EXPR .
+
+    $default  reduce using rule 12 (EXPR)
+
+
+State 27
+
+    5 STMT: IF '(' EXPR ')' . STMT
+    6     | IF '(' EXPR ')' . STMT ELSE STMT
+
+    error     shift, and go to state 3
+    IF        shift, and go to state 4
+    FOR       shift, and go to state 5
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+    ';'       shift, and go to state 9
+    '{'       shift, and go to state 10
+
+    STMT  go to state 29
+    EXPR  go to state 12
+    TERM  go to state 13
+
+
+State 28
+
+    7 STMT: FOR '(' EXPR ';' . EXPR ';' EXPR ')' STMT
+
+    error     shift, and go to state 3
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+
+    EXPR  go to state 30
+    TERM  go to state 13
+
+
+State 29
+
+    5 STMT: IF '(' EXPR ')' STMT .
+    6     | IF '(' EXPR ')' STMT . ELSE STMT
+
+    ELSE  shift, and go to state 31
+
+    $default  reduce using rule 5 (STMT)
+
+
+State 30
+
+    7 STMT: FOR '(' EXPR ';' EXPR . ';' EXPR ')' STMT
+
+    ';'  shift, and go to state 32
+
+
+State 31
+
+    6 STMT: IF '(' EXPR ')' STMT ELSE . STMT
+
+    error     shift, and go to state 3
+    IF        shift, and go to state 4
+    FOR       shift, and go to state 5
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+    ';'       shift, and go to state 9
+    '{'       shift, and go to state 10
+
+    STMT  go to state 33
+    EXPR  go to state 12
+    TERM  go to state 13
+
+
+State 32
+
+    7 STMT: FOR '(' EXPR ';' EXPR ';' . EXPR ')' STMT
+
+    error     shift, and go to state 3
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+
+    EXPR  go to state 34
+    TERM  go to state 13
+
+
+State 33
+
+    6 STMT: IF '(' EXPR ')' STMT ELSE STMT .
+
+    $default  reduce using rule 6 (STMT)
+
+
+State 34
+
+    7 STMT: FOR '(' EXPR ';' EXPR ';' EXPR . ')' STMT
+
+    ')'  shift, and go to state 35
+
+
+State 35
+
+    7 STMT: FOR '(' EXPR ';' EXPR ';' EXPR ')' . STMT
+
+    error     shift, and go to state 3
+    IF        shift, and go to state 4
+    FOR       shift, and go to state 5
+    ID        shift, and go to state 6
+    UNARY_OP  shift, and go to state 7
+    NUM       shift, and go to state 8
+    ';'       shift, and go to state 9
+    '{'       shift, and go to state 10
+
+    STMT  go to state 36
+    EXPR  go to state 12
+    TERM  go to state 13
+
+
+State 36
+
+    7 STMT: FOR '(' EXPR ';' EXPR ';' EXPR ')' STMT .
+
+    $default  reduce using rule 7 (STMT)
